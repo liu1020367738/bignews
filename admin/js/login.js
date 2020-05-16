@@ -11,16 +11,18 @@ $(function () {
                     flag = true
                 }
                 if (flag) {
-                    alert('用户名和密码不能为空')
+                    $('.modal').modal('show')
+                    $('.modal p').text('用户名和密码不能为空')
                     return false;
                 }
             },
             success: function (res) {
+                $('.modal').modal('show')
+                $('.modal p').text(res.msg)
                 if (res.code == 200) {
-                    alert(res.msg)
-                    window.location.href = './index.html'
-                } else {
-                    alert(res.msg)
+                    $('.modal').on('hidden.bs.modal', function (e) {
+                        window.location.href = './index.html'
+                    })
                 }
             }
         })
