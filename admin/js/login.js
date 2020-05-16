@@ -8,9 +8,11 @@ $(function () {
             data: $(this).serialize(),
             beforeSend: function () {
                 var flag = false
-                if (!$.trim($('input[name]').val())) {
-                    flag = true
-                }
+                $('input[name]').each(function (index, ele) {
+                    if (!$.trim($(ele).val())) {
+                        flag = true
+                    }
+                })
                 if (flag) {
                     $('.modal').modal('show')
                     $('.modal p').text('用户名和密码不能为空')
