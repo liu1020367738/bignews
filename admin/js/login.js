@@ -1,21 +1,19 @@
 $(function () {
-    $('.input_sub').on('click', function (e) {
-        // 阻止默认的提交行为
+    $('.login_form').on('submit', function (e) {
         e.preventDefault()
-        var username = $('.input_txt').val()
-        var pwd = $('.input_pass').val()
-        //检测用户名和密码是否为空
-        if (!$.trim(username) || !$.trim(pwd)) {
-            alert('用户名和密码不能为空,请重新输入...')
-            return;
-        }
-        //发送请求
         $.ajax({
             type: 'post',
             url: 'http://localhost:8080/api/v1/admin/user/login',
-            data: {
-                username: username,
-                password: pwd
+            data: $(this).serialize(),
+            beforeSend: function () {
+                var flag = false
+                if (!$.trim($('input[name]').val())) {
+                    flag = true
+                }
+                if (flag) {
+                    alert('用户名和密码不能为空')
+                    return false;
+                }
             },
             success: function (res) {
                 if (res.code == 200) {
